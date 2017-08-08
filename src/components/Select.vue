@@ -298,7 +298,7 @@
       <i v-if="!noDrop" ref="openIndicator" role="presentation" class="open-indicator"></i>
 
       <slot name="spinner">
-        <div class="spinner" v-show="mutableLoading">Loading...</div>
+        <div class="spinner" v-show="mutableLoading">{{ loadingText }}</div>
       </slot>
     </div>
 
@@ -310,7 +310,7 @@
           </a>
         </li>
         <li v-if="!filteredOptions.length" class="no-options">
-          <slot name="no-options">Sorry, no matching options.</slot>
+          <slot name="no-options">{{ noOptionsText }}</slot>
         </li>
       </ul>
     </transition>
@@ -517,7 +517,25 @@
        */
       inputId: {
         type: String
-      }
+      },
+
+      /**
+       * Loading text value.
+       * @type {Object}
+       */
+      loadingText: {
+        type: String,
+        default: 'Loading...'
+      },
+
+      /**
+       * No Options Text.
+       * @type {Object}
+       */
+      noOptionsText: {
+        type: String,
+        default: 'Sorry, no matching options.'
+      },
     },
 
     data() {
