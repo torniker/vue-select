@@ -282,7 +282,7 @@
               @keydown.delete="maybeDeleteValue"
               @keyup.esc="onEscape"
               @keydown.up.prevent="typeAheadUp"
-              @keydown.down.prevent="typeAheadDown"
+              @keydown.down.prevent="onKeyDown"
               @keyup.enter.prevent="typeAheadSelect"
               @blur="onSearchBlur"
               @focus="onSearchFocus"
@@ -536,6 +536,10 @@
         type: String,
         default: 'Sorry, no matching options.'
       },
+      onlyKa: {
+        type: Boolean,
+        default: false
+      },
     },
 
     data() {
@@ -609,7 +613,7 @@
      * attach any event listeners.
      */
     created() {
-			this.mutableValue = this.value
+      this.mutableValue = this.value
       this.mutableOptions = this.options.slice(0)
 			this.mutableLoading = this.loading
 
@@ -617,7 +621,23 @@
     },
 
     methods: {
-
+      translateToKa(str) {
+        var index, chr, text = [], symbols = "abgdevzTiklmnopJrstufqRySCcZwWxjh";
+        for (var i = 0; i < str.length; i++) {
+          chr = str.substr(i, 1);
+          if ((index = symbols.indexOf(chr)) >= 0) {
+            text.push(String.fromCharCode(index + 4304));
+          } else {
+            text.push(chr);
+          }
+        }
+        return text.join('');
+      },
+      onKeyDown(a,b,c) {
+        console.log(a,b,c)
+        this.typeAheadDown()
+      }
+      
       /**
        * Select a given option.
        * @param  {Object|String} option
