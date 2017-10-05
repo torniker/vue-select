@@ -636,7 +636,7 @@
       onKeyDown(a,b,c) {
         console.log(a,b,c)
         this.typeAheadDown()
-      }
+      },
       
       /**
        * Select a given option.
